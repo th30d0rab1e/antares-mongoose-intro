@@ -20,6 +20,9 @@ myApp.controller('IndexController', ['$scope', '$http', function($scope, $http) 
 
         $http.post('/person', person).then(function(response) {
             $scope.people = response.data;
+            $scope.name = '';
+            $scope.name.focus();
+            $scope.location = '';
         });
     };
 
