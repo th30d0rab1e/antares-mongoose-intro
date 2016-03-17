@@ -8,7 +8,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-mongoose.connect('mongodb://localhost/mongo_lecture');
+// mongoose.connect('mongodb://localhost/mongo_lecture');
+// Heroku
+mongoose.connect('mongodb://kdszafranski:password@ds015909.mlab.com:15909/heroku_x0h12v3q');
+//mLab
+//mongodb://<dbuser>:<dbpassword>@ds015909.mlab.com:15909/heroku_x0h12v3q
 mongoose.model(
     'Person',
     new Schema({
