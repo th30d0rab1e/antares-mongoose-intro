@@ -1,0 +1,112 @@
+app.delete('/data', function(req,res){
+    Person.findByIdAndRemove({"_id" : req.body.id}, function(err, data){
+        if(err) console.log(err);
+        res.send(data);
+    });
+});
+
+app.put('/data', function(req,res) {
+    console.log("Updating on Server!");
+
+    // Update only
+    //var newName = "New Name";
+    //Person.update({_id: req.body.id}, {
+    //    $set: {name: newName}
+    //}, function(err) {
+    //    if(err) {
+    //        console.log("Ooops: ", err);
+    //    } else {
+    //        console.log("Updated!");
+    //    }
+    //});
+
+    var newName = "New Name";
+    Person.findByIdAndUpdate({_id: req.body.id},
+        {
+            $set: {name: newName}
+        }, function(err, person) {
+            if(err) {
+                console.log("Ooops: ", err);
+            } else {
+                res.send(person);
+            }
+    });
+
+    //Tank.findByIdAndUpdate(id, { $set: { size: 'large' }}, function (err, tank) {
+    //    if (err) return handleError(err);
+    //    res.send(tank);
+    //});
+});
+
+/*
+ var query = req.query.peopleSearch;
+ if(query) {
+ Person.find({name: query}, function(err, data) { // class example
+ // 'like' matching
+ //Person.find({name: new RegExp(query.valueOf(), "i")}, function(err, data) {
+ if(err) {
+ console.log("Error: ", err);
+ }
+ res.send(data);
+ });
+ } else {
+ Person.find({}, function(err, data) {
+ if(err) {
+ console.log("Error: ", err);
+ }
+ res.send(data);
+ });
+ }*/
+
+
+ var mongoose = require('mongoose');
+
+ var Schema = mongoose.Schema;
+
+ mongoose.connect('mongodb://localhost/mongo_lecture');
+ mongoose.model('Person', new Schema({"name": String, "location": String}, {collection: 'people'}));
+ var Person = mongoose.model('Person');
+
+ app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded({extended: true}));
+
+ app.get('/data', function(req,res){
+     var query = req.query.peopleSearch;
+
+     if(query){
+         Person.find({"name" : query}, function(err, data){
+             if(err){
+                 console.log("ERROR! : ", err);
+             }
+             res.send(data);
+         });
+     } else {
+         Person.find({}, function(err, data){
+             if(err){
+                 console.log("ERROR! : ", err);
+             }
+             res.send(data);
+         });
+     }
+ });
+
+ app.post('/data', function(req, res) {
+     var addedPerson = new Person({
+         "name" : req.body.name,
+         "location" : req.body.location
+     });
+
+     addedPerson.save(function(err, data){
+         if(err) console.log(err);
+         Person.find({}, function(err, data){
+             if(err){
+                 console.log("ERROR! : ", err);
+             }
+             res.send(data);
+         });
+     });
+ });
+
+
+
+mongorestore -h ds015879.mlab.com:15879 -d heroku_qwjd5hg9 -u kdszafranski -p password
