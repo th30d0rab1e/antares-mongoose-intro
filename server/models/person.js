@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 
 // Step 1 - Create the Schema
 var personSchema = new Schema({
-    "name": String,
-    "location": String
+    name: {type: String, required: true},
+    location: String,
+    birthDate: {type: Date, default: new Date()}
 });
     // optional
     // {
@@ -13,7 +14,8 @@ var personSchema = new Schema({
     // }
 
 personSchema.pre('save', function(next) {
-  console.log("Hey, I'm saving!");
+  // this is the mongo object about to be saved.
+  console.log("Hey, I'm saving --> ", this);
   next();
 });
 

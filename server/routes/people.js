@@ -71,7 +71,6 @@ router.post('/search', function(req, res) {
         console.log("Error: ", err);
         res.sendStatus(500);
       } else {
-        console.log(data);
         res.send(data);
       }
     }
