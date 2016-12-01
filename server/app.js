@@ -9,6 +9,7 @@ var people = require('./routes/people.js');
 
 /** ---------- MIDDLEWARE ---------- **/
 app.use(express.static(path.join(__dirname, './public')));
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // needed for angular requests
 
 /** ---------- EXPRESS ROUTES ---------- **/

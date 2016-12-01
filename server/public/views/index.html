@@ -23,6 +23,15 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-6">
+            <form>
+                <label for="search">Search: </label>
+                <input type="text" ng-model="peeps.searchName" id="search" />
+                <button class="btn btn-info" ng-click="peeps.search()">Find</button>
+            </form>
+            </div>
+        </div>
+        <div class="row">
             <div ng-repeat="person in peeps.people" class="well col-md-3">
                 <p>{{person.name}}</p>
                 <p>{{person.location}}</p>

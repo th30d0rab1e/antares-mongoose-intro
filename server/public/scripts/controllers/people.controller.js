@@ -2,11 +2,15 @@ myApp.controller('PeopleController', ['$http', function($http) {
     var self = this;
     self.people = [];
     self.newPerson = {};
+    self.searchName = "";
 
+    // Start app
+    getData();
+
+    // Get all people
     function getData() {
       $http.get('/person')
         .then(function(response) {
-          console.log(response);
           self.people = response.data;
         },
         function(response) {
@@ -14,6 +18,19 @@ myApp.controller('PeopleController', ['$http', function($http) {
         });
     }
 
+    // Searching
+    self.search = function() {
+      $http.post('/person/search', { findName: self.searchName} )
+      .then(function(response) {
+        console.log('here', response.data);
+        self.people = response.data;
+      },
+      function(response) {
+        console.log('search error: ', response);
+      });
+    }
+
+    // add person
     self.addPerson = function() {
       $http.post('/person', self.newPerson)
         .then(function(response) {
@@ -26,6 +43,7 @@ myApp.controller('PeopleController', ['$http', function($http) {
         });
     };
 
+    // delete person
     self.deletePerson = function(id) {
       console.log(id);
       $http.delete('/person/' + id)
@@ -37,6 +55,7 @@ myApp.controller('PeopleController', ['$http', function($http) {
         });
     }
 
+    // update person
     self.updatePerson = function(id) {
       console.log(id);
       var data = {name: 'Scott'};
@@ -51,8 +70,5 @@ myApp.controller('PeopleController', ['$http', function($http) {
           console.log('put error:', response);
         });
     }
-
-
-    getData();
 
 }]);

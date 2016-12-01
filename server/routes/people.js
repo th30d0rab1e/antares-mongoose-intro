@@ -59,4 +59,24 @@ router.put('/:id', function(req, res){
 
 });
 
+// Searching
+router.post('/search', function(req, res) {
+  var name = req.body;
+  console.log('search query: ', name);
+  // 'like' matching with simple RegEx
+  Person.find(
+    { name: new RegExp(name.findName, 'i') },
+    function(err, data) {
+      if(err) {
+        console.log("Error: ", err);
+        res.sendStatus(500);
+      } else {
+        console.log(data);
+        res.send(data);
+      }
+    }
+  );
+
+});
+
 module.exports = router;

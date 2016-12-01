@@ -4,13 +4,19 @@ var Schema = mongoose.Schema;
 
 // Step 1 - Create the Schema
 var personSchema = new Schema({
-        "name": String,
-        "location": String
-    });
+    "name": String,
+    "location": String
+});
     // optional
     // {
     //     collection: 'people'
     // }
+
+personSchema.pre('save', function(next) {
+  console.log("Hey, I'm saving!");
+  next();
+});
+
 
 // Step 2 - Create the model
 var Person = mongoose.model('Person', personSchema);
