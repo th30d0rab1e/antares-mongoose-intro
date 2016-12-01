@@ -4,6 +4,7 @@ var Person = require('../models/person');
 
 router.get('/', function(req, res) {
   Person.find({}, function(err, data) {
+  // Person.find({}, null, {sort: {name: 1}}, function(err, data) {
     if(err) {
       console.log('ERR: ', err);
       sendStatus(500);
