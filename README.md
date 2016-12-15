@@ -1,4 +1,4 @@
-# Sigma Mongoose Intro
+# Sigma Mongoose Intro (completed lecture repo)
 An overview for today's Mongoose lecture.
 
 We are starting with an application that will run and serve our
