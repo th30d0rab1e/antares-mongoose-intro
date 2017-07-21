@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Person = require('../models/person.schema.js');
 
-console.log('here is the Person model: ', Person);
-
 router.delete('/:id', function(req, res) {
   console.log('delete with id: ', req.params.id);
 
@@ -40,6 +38,7 @@ router.put('/:id', function(req, res) {
 });
 
 router.get('/', function(req, res) {
+  // find (select) all documents in our collection
   Person.find({}, function(err, data) {
     if(err) {
       console.log('find error:', err);
@@ -54,8 +53,10 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
   console.log('log the data: ', req.body);
 
+  // create an object instance from our Person model
   var addPerson = new Person(req.body);
 
+  // insert into our collection
   addPerson.save(function(err, data) {
     console.log('saved data:', data);
     if(err) {

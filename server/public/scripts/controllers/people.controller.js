@@ -2,6 +2,7 @@ myApp.controller('PeopleController', ['$http', function($http) {
     var vm = this;
     vm.newPerson = {};
 
+    // get the people data from the server and fill the DOM
     getPeople();
 
     vm.addPerson = function() {
