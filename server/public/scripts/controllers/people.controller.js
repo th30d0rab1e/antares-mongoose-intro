@@ -7,6 +7,7 @@ myApp.controller('PeopleController', ['$http', function($http) {
 
     vm.addPerson = function() {
       console.log('add person', vm.newPerson);
+      vm.newPerson.internetPoints = 1000;
       $http.post('/person', vm.newPerson)
         .then(function(response) {
           console.log('added person', response);
@@ -23,12 +24,22 @@ myApp.controller('PeopleController', ['$http', function($http) {
         });
     }
 
+    vm.addPoints = function(id, points){
+      console.log('going to add 100 points');
+      points += 100;
+      var internetPoints = {internetPoints: points};
+      $http.put('/person/addPoints/' + id, internetPoints)
+        .then(function(response){
+          getPeople();
+        });
+    }
+
     vm.deletePerson = function(id) {
       console.log('delete person with id: ', id);
       $http.delete('/person/' + id)
         .then(function(response) {
           getPeople();
-        })
+        });
     }
 
     function getPeople() {
@@ -37,5 +48,7 @@ myApp.controller('PeopleController', ['$http', function($http) {
         vm.people = response.data;
       });
     }
+
+
 
 }]);

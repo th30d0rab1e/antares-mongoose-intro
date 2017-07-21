@@ -37,6 +37,22 @@ router.put('/:id', function(req, res) {
 
 });
 
+router.put('/addPoints/:id', function(req, res){
+  console.log('more points', req.body.internetPoints);
+  Person.findByIdAndUpdate(
+    {_id: req.params.id},
+    {$set: {internetPoints: req.body.internetPoints}},
+    function(err, data){
+      if(err){
+        console.log('update internetPoints error:', err);
+        res.sendStatus(500);
+      } else {
+        res.sendStatus(200);
+      }
+    }
+  )
+});
+
 router.get('/', function(req, res) {
   // find (select) all documents in our collection
   Person.find({}, function(err, data) {
